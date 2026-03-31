@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<robot name="my_robotic_arm">
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="Models/base_link v13.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="shoulder_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 -1.570796"/>
+      <geometry>
+        <mesh filename="Models/Shoulder.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+  </link>
+     <joint name="shoulder_yaw_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    
+    <origin xyz="0.000986 -0.000494 0.065" rpy="0 0 0"/> 
+    
+    <axis xyz="0 0 1"/>
+    
+    <limit effort="10.0" lower="-1.5708" upper="1.5708" velocity="1.0"/>
+  </joint>
+  
+
+<link name="lower-arm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="Models/lower_arm.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0.5 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="lower_arm_joint" type="revolute">
+    <parent link="shoulder_link"/>
+    <child link="lower-arm"/>
+    
+    <origin xyz="0 -0.098 0.055" rpy="-1.570796 0 3.14159"/> 
+    
+    <axis xyz="0 0 1"/>
+        <limit effort="10.0" lower="-1.5708" upper="1.5708" velocity="1.0"/>
+      </joint>
+
+<link name="upper-arm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="Models/elbowarm.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.7 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="upper_arm_joint" type="revolute">
+    <parent link="lower-arm"/>
+    <child link="upper-arm"/>
+    
+    <origin xyz="0 -0.149 0.04" rpy="-1.570796 0 3.14159"/> 
+    
+    <axis xyz="0 0 1"/>
+        <limit effort="10.0" lower="-1.5708" upper="1.5708" velocity="1.0"/>
+      </joint>
+
+<link name="forearm">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="Models/forearm.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.7 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="forearm_joint" type="revolute">
+    <parent link="upper-arm"/>
+    <child link="forearm"/>
+    
+    <origin xyz="0.096 -0.005 0.05" rpy="1.570796 0 1.570796"/> 
+    
+    <axis xyz="0 0 1"/>
+    <limit effort="10.0" lower="-1.5708" upper="1.5708" velocity="1.0"/>
+      </joint>
+<link name="end">
+    <visual>
+      <origin xyz="-0.065 0 0.03" rpy="1.570796 0 3.14159"/>
+      <geometry>
+        <mesh filename="Models/GripperSupport.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.7 0.7 0 1"/>
+      </material>
+    </visual>
+  </link>
+    <joint name="end-joint" type="fixed">
+    <parent link="forearm"/>
+    <child link="end"/>
+      </joint>
+      
+  <link name="gripper">
+    <visual>
+      <origin xyz="-0.1 0.01 0.075" rpy="3.14159 1.570796 0"/>
+      <geometry>
+        <mesh filename="Models/GRIPPER_ASSEMBLY v1_Assembly v41_ad_1_Body1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.7 0.7 0 1"/>
+      </material>
+    </visual>
+  </link>
+    <joint name="end-joint" type="fixed">
+    <parent link="end"/>
+    <child link="gripper"/>
+      </joint>
+</robot>
